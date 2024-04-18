@@ -24,6 +24,7 @@ class Settings:
 
         # 设置细胞大小
         self.cell_size = 10
+        # 设置细胞速度
         self.cell_speed = 4
         # 设置细胞生命状态
 

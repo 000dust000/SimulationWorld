@@ -47,14 +47,12 @@ class SimulationWorld:
 
             # 绘制游戏背景
             self.screen.fill(self.bg_color)
-
             for cell in self.cell_list:
                 cell.update( self.cell_list)
             # 绘制细胞
             self.draw_cell()
             # 更新游戏界面
             pygame.display.flip()
-
         # 退出游戏
         pygame.quit()
 
