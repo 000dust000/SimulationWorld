@@ -56,3 +56,4 @@ class Settings:
         """世界设置"""
         self.world_oxygen = 100
         self.world_carbon_dioxide = 100
+        self.world_day_time = 30
