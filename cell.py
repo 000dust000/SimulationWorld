@@ -56,7 +56,9 @@ class Cell:
         x_toward_center = distance_x / self.search_radius
         y_toward_center = distance_y / self.search_radius
 
-        # 距离过近则对方向qv'fan
+        # 距离过近则对方向取反
+        if distance_x < 0:
+            x_toward_center = -x_toward_center
 
         # 获取一个-1到1之间的随机数
         # 单个细胞的随机数
@@ -99,14 +101,14 @@ class Cell:
     # 检测细胞存活状态
     def check_alive(self):
         """检查细胞存活状态"""
-        if self.oxygen <= 0 or self.carbon_dioxide >= 100:
+        if self.oxygen <= 0 or self.carbon_dioxide >= 100000:
             self.alive = False
 
     def cell_change(self,cell_list):
         """细胞状态变化"""
         self.oxygen -= 1
         self.carbon_dioxide += 1
-        if self.alive:
+        if not self.alive:
             cell_list.remove(self)
 
     def update(self,cell_list):

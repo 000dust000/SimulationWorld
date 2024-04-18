@@ -31,7 +31,7 @@ class Settings:
         self.cell_alive = True
         self.cell_health = 10000
         self.cell_oxygen = 10000
-        self.cell_carbon_dioxide = 10000
+        self.cell_carbon_dioxide = 0
 
         """生产者细胞设置"""
         # 设置生产者细胞颜色为绿色
@@ -40,7 +40,7 @@ class Settings:
         self.producer_cell_speed = 4
         self.producer_cell_health = 10000
         self.producer_cell_oxygen = 10000
-        self.producer_cell_carbon_dioxide = 10000
+        self.producer_cell_carbon_dioxide = 0
         self.producer_cell_search_radius = 1
 
         """消费者细胞设置"""
@@ -50,7 +50,7 @@ class Settings:
         self.consumer_cell_speed = 4
         self.consumer_cell_health = 10000
         self.consumer_cell_oxygen = 10000
-        self.consumer_cell_carbon_dioxide = 10000
+        self.consumer_cell_carbon_dioxide = 0
         self.consumer_cell_search_radius = 1
 
 
