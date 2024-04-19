@@ -118,6 +118,8 @@ class Cell:
         self.x_move += x_move
         self.y_move += y_move
 
+        self.__check_collision()
+
         if self.x_move > 1:
             self.x_move = 1
         if self.x_move < -1:
@@ -150,6 +152,17 @@ class Cell:
             self.x_move = -self.x_move
         if self.y < self.world.top + self.size or self.y > self.world.bottom - self.size:
             self.y_move = -self.y_move
+
+    # 检测细胞碰撞
+    def __check_collision(self):
+        """检查细胞碰撞"""
+        # self.world.refresh_cell_location(cell_list)
+        for location in self.world.world_cell_location:
+            if self.x == location[0] and self.y == location[1]:
+                continue
+            if (self.x - location[0]) ** 2 + (self.y - location[1]) ** 2 <= 0.5 * (self.size + location[2]) ** 2:
+                self.x_move = -self.x_move
+                self.y_move = -self.y_move
 
     # 检测细胞存活状态
     def check_alive(self):

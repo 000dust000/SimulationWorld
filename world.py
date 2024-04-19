@@ -24,6 +24,9 @@ class World:
         self.oxygen = self.settings.world_oxygen
         self.carbon_dioxide = self.settings.world_carbon_dioxide
 
+        # 当前细胞所存在的位置
+        self.world_cell_location = []
+
     def day_night_change(self):
         """设置白天黑夜"""
         if self.day:
@@ -47,3 +50,9 @@ class World:
     def carbon_dioxide_change(self, x):
         """二氧化碳变化"""
         self.carbon_dioxide += x
+
+    def refresh_cell_location(self, cell_list):
+        """刷新细胞位置"""
+        self.world_cell_location = []
+        for cell in cell_list:
+            self.world_cell_location.append((cell.x, cell.y, cell.size))  # 横纵坐标，细胞大小

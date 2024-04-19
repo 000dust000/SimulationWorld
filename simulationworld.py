@@ -48,6 +48,7 @@ class SimulationWorld:
             # 更新游戏状态
             self.screen.fill(self.bg_color)
 
+            self.world.refresh_cell_location(self.cell_list)
             Cell.set_cells_move()
             for cell in self.cell_list:
                 cell.update( self.cell_list)
