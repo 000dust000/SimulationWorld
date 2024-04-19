@@ -20,18 +20,24 @@ class Settings:
         # 设置细胞颜色为绿色
         self.cell_color = (0, 255, 0)
         # 细胞视觉半径
-        self.cell_search_radius = 1
+        self.cell_search_radius = 300
 
         # 设置细胞大小
         self.cell_size = 10
         # 设置细胞速度
-        self.cell_speed = 4
+        self.cell_speed = 1
         # 设置细胞生命状态
 
         self.cell_alive = True
         self.cell_health = 10000
         self.cell_oxygen = 10000
         self.cell_carbon_dioxide = 0
+
+        # 细胞与周围细胞中心的距离
+        self.cell_distance = 0.2
+
+        # 细胞随机运动概率
+        self.cell_random_move_rate = 0.5
 
         """生产者细胞设置"""
         # 设置生产者细胞颜色为绿色

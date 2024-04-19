@@ -45,8 +45,10 @@ class SimulationWorld:
                 if event.type == pygame.QUIT:
                     self.running = False
 
-            # 绘制游戏背景
+            # 更新游戏状态
             self.screen.fill(self.bg_color)
+
+            Cell.set_cells_move()
             for cell in self.cell_list:
                 cell.update( self.cell_list)
             # 绘制细胞
