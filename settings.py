@@ -20,7 +20,7 @@ class Settings:
         # 设置细胞颜色为绿色
         self.cell_color = (0, 255, 0)
         # 细胞视觉半径
-        self.cell_search_radius = 300
+        self.cell_search_radius = 250
 
         # 设置细胞大小
         self.cell_size = 10
@@ -38,6 +38,18 @@ class Settings:
 
         # 细胞随机运动概率
         self.cell_random_move_rate = 0.5
+
+        # 细胞跟随整体移动的因子
+        self.cell_follow_all = 2
+
+        # 细胞向周围细胞靠拢的因子
+        self.cell_follow_cell_around = 1
+
+        # 细胞间发生碰撞时的微小移动
+        self.cell_collision_move = 0.1
+
+        # 细胞与边界碰撞后的速度保留率
+        self.cell_speed_reserved = 0.8
 
         """生产者细胞设置"""
         # 设置生产者细胞颜色为绿色

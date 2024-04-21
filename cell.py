@@ -14,6 +14,17 @@ class Cell:
         Cell.cells_move_x = (random.random() - 0.5) * 2
         Cell.cells_move_y = (random.random() - 0.5) * 2
 
+        #
+        # # 不通过随机值，直接获取平均速度的实现
+        # Cell.cells_move_x = 0
+        # Cell.cells_move_y = 0
+        # for cell in cell_list:
+        #     Cell.cells_move_x += cell.x_move
+        #     Cell.cells_move_y += cell.y_move
+        # Cell.cells_move_x /= len(cell_list)
+        # Cell.cells_move_y /= len(cell_list)
+
+
     # 构造方法
     def __init__(self, x, y, world):
         self.settings = Settings()
@@ -56,37 +67,6 @@ class Cell:
         y_average = y_average / cell_number
         return x_average, y_average
 
-    # def move_rules(self, world, cell_list):
-    #     """细胞运动规则"""
-    #
-    #     # 获取周围细胞的中心坐标
-    #     x_average, y_average = self.__get_center(cell_list)
-    #
-    #     # 细胞距离中心位置距离
-    #     distance_x = x_average - self.x
-    #     distance_y = y_average - self.y
-    #
-    #     # 将距离转换为中心方向
-    #     x_toward_center = distance_x / self.search_radius
-    #     y_toward_center = distance_y / self.search_radius
-    #
-    #     # 距离过近则对方向取反
-    #     if distance_x < 0:
-    #         x_toward_center = -x_toward_center
-    #     if distance_y < 0:
-    #         y_toward_center = -y_toward_center
-    #
-    #     # 获取一个-1到1之间的随机数
-    #     # 单个细胞的随机数
-    #     random_all_cell_x = (random.random() - 0.5) * 2
-    #     random_all_cell_y = (random.random() - 0.5) * 2
-    #
-    #     # 最终运动方向
-    #     x_move = x_toward_center + random_all_cell_x
-    #     y_move = y_toward_center + random_all_cell_y
-    #     return x_move, y_move
-    #
-
     # 细胞运动方向改变
     def move_rules(self, world, cell_list):
         # 获取周围细胞的中心坐标
@@ -107,8 +87,10 @@ class Cell:
         y_random = (random.random() - 0.5) * 2 if self.__judge_through_rate(self.settings.cell_random_move_rate) else 0
 
         # 最终运动方向
-        x_move = self.__sigmoid(x_toward_center + x_random + Cell.cells_move_x) - 0.5
-        y_move = self.__sigmoid(y_toward_center + y_random + Cell.cells_move_y) - 0.5
+        x_move = self.__sigmoid(x_toward_center * self.settings.cell_follow_cell_around + x_random + \
+                                Cell.cells_move_x * self.settings.cell_follow_all) - 0.5
+        y_move = self.__sigmoid(y_toward_center * self.settings.cell_follow_cell_around + y_random + \
+                                Cell.cells_move_y * self.settings.cell_follow_all) - 0.5
 
         return x_move, y_move
 
@@ -149,9 +131,9 @@ class Cell:
     def __check_boundary(self):
         """检查边界"""
         if self.x < self.world.left + self.size or self.x > self.world.right - self.size:
-            self.x_move = -self.x_move
+            self.x_move = -self.x_move * self.settings.cell_speed_reserved
         if self.y < self.world.top + self.size or self.y > self.world.bottom - self.size:
-            self.y_move = -self.y_move
+            self.y_move = -self.y_move * self.settings.cell_speed_reserved
 
     # 检测细胞碰撞
     def __check_collision(self):
@@ -161,8 +143,13 @@ class Cell:
             if self.x == location[0] and self.y == location[1]:
                 continue
             if (self.x - location[0]) ** 2 + (self.y - location[1]) ** 2 <= 0.5 * (self.size + location[2]) ** 2:
+                # 改变细胞运动方向
                 self.x_move = -self.x_move
                 self.y_move = -self.y_move
+
+                # 为细胞添加微小移动以防止细胞重叠
+                self.x += self.settings.cell_collision_move * self.x_move
+                self.y += self.settings.cell_collision_move * self.y_move
 
     # 检测细胞存活状态
     def check_alive(self):
